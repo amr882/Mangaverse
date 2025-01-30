@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mangaverse/auth/view/sign_in.dart';
+import 'package:mangaverse/auth/view/sign_up.dart';
 import 'package:mangaverse/widgets/button.dart';
 import 'package:mangaverse/widgets/continue_with.dart';
 import 'package:sizer/sizer.dart';
@@ -120,7 +121,7 @@ class _LetsYouInState extends State<LetsYouIn> {
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const SignIn()));
+                            builder: (context) => const SignUp()));
                       },
                       child: Text(
                         'Sign Up',

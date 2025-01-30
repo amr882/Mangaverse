@@ -42,7 +42,7 @@ class _SignInState extends State<SignIn> {
       passwordController.text,
     );
     Navigator.of(context).pushNamedAndRemoveUntil(
-      "LatestManga",
+      "nav",
       (route) => false,
     );
   }

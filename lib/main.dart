@@ -47,7 +47,8 @@ class _MyAppState extends State<MyApp> {
             routes: {
               'letsYouIn': (context) => const LetsYouIn(),
               'SignIn': (context) => const SignIn(),
-              "LatestManga": (context) => const LatestManga()
+              "LatestManga": (context) => const LatestManga(),
+              "nav": (context) => const CustomBottomNavigationBar()
             });
       },
     );
