@@ -53,8 +53,8 @@ class _LatestMangaState extends State<LatestMangaPage> {
               },
               child: Column(
                 children: [
-                  SizedBox(
-                    height: 20,
+                   SizedBox(
+                    height: 4.h,
                   ),
                   Expanded(
                     child: GridView.builder(

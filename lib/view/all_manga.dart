@@ -54,7 +54,7 @@ class _AllMangaState extends State<AllManga> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 20,
+                    height: 4.h,
                   ),
                   Expanded(
                     child: GridView.builder(
