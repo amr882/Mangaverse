@@ -15,12 +15,12 @@ class MangaApi {
 // featch latest mangas
 
   static Future featchLatestMangas(int current_page) async {
-    final response = await http.get(
+    final respone = await http.get(
         Uri.parse("${url}manga/latest?page=$current_page&type=all"),
         headers: headers);
 
-    if (response.statusCode == 200) {
-      final List<dynamic> jsonData = jsonDecode(response.body)["data"];
+    if (respone.statusCode == 200) {
+      final List<dynamic> jsonData = jsonDecode(respone.body)["data"];
       final List<MangaModel> mangas =
           jsonData.map((data) => MangaModel.fromJson(data)).toList();
       return mangas;
@@ -29,21 +29,46 @@ class MangaApi {
     }
   }
 
-//  manga/latest?page=1&type=all
-
   // featch all mangas
-  static Future fetchMangas(int current_page) async {
-    final response = await http.get(
+  static Future fetchAllMangas(int current_page) async {
+    final respone = await http.get(
         Uri.parse("${url}manga/fetch?page=$current_page&type=all"),
         headers: headers);
 
-    if (response.statusCode == 200) {
-      final List<dynamic> jsonData = jsonDecode(response.body)["data"];
+    if (respone.statusCode == 200) {
+      final List<dynamic> jsonData = jsonDecode(respone.body)["data"];
       final List<MangaModel> mangas =
           jsonData.map((data) => MangaModel.fromJson(data)).toList();
       return mangas;
     } else {
       throw Exception("error getting manga data");
+    }
+  }
+
+  // search for mangas
+  static Future searchMangas(String mangaName) async {
+    final respone = await http
+        .get(Uri.parse("${url}manga/search?text=$mangaName"), headers: headers);
+    if (respone.statusCode == 200) {
+      final List<dynamic> jsonData = jsonDecode(respone.body)["data"];
+      final List<MangaModel> mangas =
+          jsonData.map((data) => MangaModel.fromJson(data)).toList();
+      return mangas;
+    } else {
+      throw Exception("error getting data");
+    }
+  }
+
+  //get manga (manga id)
+  // manga?id=659524dd597f3b00281f06ff
+
+  static Future getManga(String manga_id) async {
+    final respone =
+        await http.get(Uri.parse("${url}manga?id=$manga_id"), headers: headers);
+    if (respone.statusCode == 200) {
+      return MangaModel.fromJson(jsonDecode(respone.body)["data"]);
+    } else {
+      throw Exception("error getting data");
     }
   }
 }

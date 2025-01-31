@@ -2,8 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mangaverse/auth/view/lets_you_in.dart';
 import 'package:mangaverse/auth/view/sign_in.dart';
-import 'package:mangaverse/model/manga_model.dart';
-import 'package:mangaverse/services/manga_api.dart';
 import 'package:mangaverse/view/latest_manga.dart';
 import 'package:mangaverse/view/intro_page.dart';
 import 'package:mangaverse/widgets/bottom_nav.dart';
@@ -24,17 +22,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Future featchLatestMangas() async {
-    final req = await MangaApi.featchLatestMangas(1);
-    setState(() {
-      latestManga = req;
-    });
-    print(latestManga);
-  }
 
   @override
   void initState() {
-    featchLatestMangas();
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
         print('User is currently signed out!');
@@ -65,8 +55,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-//latest manga
-List<MangaModel> latestManga = [];
-//all manga
-List<MangaModel> allManga = [];
