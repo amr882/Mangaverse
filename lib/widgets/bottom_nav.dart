@@ -17,7 +17,7 @@ class CustomBottomNavigationBar extends StatefulWidget {
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   var _currentPage = 0;
   List<Widget> pages = [
-    const LatestManga(),
+    const LatestMangaPage(),
     const AllManga(),
     const SearchManga(),
     const UserProfile()

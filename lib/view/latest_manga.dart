@@ -1,38 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:mangaverse/main.dart';
 import 'package:mangaverse/model/manga_model.dart';
 import 'package:mangaverse/services/manga_api.dart';
 
-class LatestManga extends StatefulWidget {
-  const LatestManga({super.key});
+class LatestMangaPage extends StatefulWidget {
+  const LatestMangaPage({super.key});
 
   @override
-  State<LatestManga> createState() => _LatestMangaState();
+  State<LatestMangaPage> createState() => _LatestMangaState();
 }
 
-class _LatestMangaState extends State<LatestManga> {
-  List<MangaModel> manga = [];
-  Future fetchMangas() async {
-    final req = await MangaApi.fetchMangas(1);
-    setState(() {
-      manga = req;
-    });
-    print(manga);
-  }
-
-  @override
-  void initState() {
-    // fetchMangas();
-    super.initState();
-  }
-
+class _LatestMangaState extends State<LatestMangaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView.builder(
           physics: const BouncingScrollPhysics(),
-          itemCount: manga.length,
+          itemCount: latestManga.length,
           itemBuilder: (context, index) {
-            return Text(manga[index].id);
+            return Text(latestManga[index].id);
           }),
     );
   }

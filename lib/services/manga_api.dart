@@ -12,6 +12,26 @@ class MangaApi {
     "x-rapidapi-host": "mangaverse-api.p.rapidapi.com"
   };
 
+// featch latest mangas
+
+  static Future featchLatestMangas(int current_page) async {
+    final response = await http.get(
+        Uri.parse("${url}manga/latest?page=$current_page&type=all"),
+        headers: headers);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = jsonDecode(response.body)["data"];
+      final List<MangaModel> mangas =
+          jsonData.map((data) => MangaModel.fromJson(data)).toList();
+      return mangas;
+    } else {
+      throw Exception("error getting manga data");
+    }
+  }
+
+//  manga/latest?page=1&type=all
+
+  // featch all mangas
   static Future fetchMangas(int current_page) async {
     final response = await http.get(
         Uri.parse("${url}manga/fetch?page=$current_page&type=all"),
@@ -26,14 +46,4 @@ class MangaApi {
       throw Exception("error getting manga data");
     }
   }
-
-  // static Future getManga(String mangaId) async {
-  //   final response =
-  //       await http.get(Uri.parse("${url}manga?id=$mangaId"), headers: headers);
-  //   if (response.statusCode == 200) {
-  //     return MangaResourceModel.fromJson(jsonDecode(response.body));
-  //   } else {
-  //     throw Exception("error getting manga data");
-  //   }
-  // }
 }
