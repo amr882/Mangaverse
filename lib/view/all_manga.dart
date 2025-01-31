@@ -61,7 +61,7 @@ class _AllMangaState extends State<AllManga> {
                         physics: BouncingScrollPhysics(),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
-                          childAspectRatio: 0.08.h,
+                          childAspectRatio: 0.085.h,
                         ),
                         itemCount: allManga.length,
                         itemBuilder: (context, index) => GestureDetector(
@@ -70,14 +70,18 @@ class _AllMangaState extends State<AllManga> {
                                     builder: (context) => MangaDetails(
                                         mangaModel: allManga[index])));
                               },
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(13),
-                                child: Image.network(
-                                  allManga[index].manga_photo,
-                                  height: 22.5.h,
-                                  width: 30.w,
-                                  fit: BoxFit.cover,
-                                ),
+                              child: Column(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(13),
+                                    child: Image.network(
+                                      allManga[index].manga_photo,
+                                      height: 22.5.h,
+                                      width: 30.w,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ],
                               ),
                             )),
                   ),
