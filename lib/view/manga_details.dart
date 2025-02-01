@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:mangaverse/model/manga_model.dart';
 
 class MangaDetails extends StatefulWidget {
@@ -10,11 +11,29 @@ class MangaDetails extends StatefulWidget {
 }
 
 class _MangaDetailsState extends State<MangaDetails> {
+  GlobalKey<ScaffoldState> globalKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(widget.mangaModel.manga_titel),
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        key: globalKey,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          bottom: TabBar(
+            tabs: <Widget>[
+              Tab(
+                icon: Text("1"),
+              ),
+              Tab(
+                icon: Text("2"),
+              ),
+              Tab(
+                icon: Text("3"),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -51,7 +51,7 @@ class _SearchMangaState extends State<SearchManga> {
             padding: EdgeInsets.symmetric(horizontal: 5.w),
             child: TextField(
               controller: _controller,
-              style: GoogleFonts.rubik(color: Colors.white),
+              style: GoogleFonts.rubik(color: Colors.black),
               cursorColor: Colors.black,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
