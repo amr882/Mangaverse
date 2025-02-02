@@ -23,6 +23,8 @@ class _MangaDetailsState extends State<MangaDetails> {
         child: Scaffold(
             key: globalKey,
             appBar: AppBar(
+              backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+              elevation: 5,
               shadowColor: Theme.of(context).colorScheme.shadow,
               title: Text(
                 widget.mangaModel.manga_titel.length <= 20
@@ -69,7 +71,10 @@ class _MangaDetailsState extends State<MangaDetails> {
             ),
             body: TabBarView(
               children: <Widget>[
-                DetailsPage(),
+                DetailsPage(
+                  manga_photo: widget.mangaModel.manga_photo,
+                  manga_titel: widget.mangaModel.manga_titel,
+                ),
                 ChaptersPage(),
                 MoreLikeThisPage()
               ],

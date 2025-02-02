@@ -79,7 +79,7 @@ class _SearchMangaState extends State<SearchManga> {
           ),
           Expanded(
             child: isLoading
-                ? const Center(child: CircularProgressIndicator())
+                ? const Center(child: CircularProgressIndicator(color: Colors.green,))
                 : GridView.builder(
                     physics: BouncingScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
