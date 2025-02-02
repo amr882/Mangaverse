@@ -1,11 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
-class DetailsPage extends StatelessWidget {
+class DetailsPage extends StatefulWidget {
   final String manga_photo;
   final String manga_titel;
+  final String status;
+  final int create_at;
   const DetailsPage(
-      {super.key, required this.manga_photo, required this.manga_titel});
+      {super.key,
+      required this.manga_photo,
+      required this.manga_titel,
+      required this.status,
+      required this.create_at});
+
+  @override
+  State<DetailsPage> createState() => _DetailsPageState();
+}
+
+class _DetailsPageState extends State<DetailsPage> {
+  String time = "";
+  getTime() {
+    var dateUtc =
+        DateTime.fromMillisecondsSinceEpoch(widget.create_at, isUtc: true);
+    var dateInMyTimezone = dateUtc.add(Duration(hours: 8));
+    var month = DateFormat('MMMM').format(DateTime(0, dateInMyTimezone.month));
+    setState(() {
+      time = "${dateInMyTimezone.year},$month,${dateInMyTimezone.day}";
+    });
+  }
+
+  @override
+  void initState() {
+    getTime();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +56,7 @@ class DetailsPage extends StatelessWidget {
                   ],
                 ),
                 child: Image.network(
-                  manga_photo,
+                  widget.manga_photo,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -52,7 +81,7 @@ class DetailsPage extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(
-                        manga_photo,
+                        widget.manga_photo,
                         height: 27.5.h,
                         width: 35.w,
                         fit: BoxFit.cover,
@@ -66,8 +95,14 @@ class DetailsPage extends StatelessWidget {
                         SizedBox(
                             width: 50.w,
                             child: Text(
-                              manga_titel,
+                              widget.manga_titel,
                               style: TextStyle(fontWeight: FontWeight.bold),
+                            )),
+                        SizedBox(
+                            width: 50.w,
+                            child: Text(
+                              "$time\n${widget.status}",
+                              style: TextStyle(color: Color(0xff8d8e89)),
                             )),
                       ],
                     )

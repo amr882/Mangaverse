@@ -8,8 +8,10 @@ class MangaModel {
   final List<dynamic> authors;
   final List<dynamic> genres;
   final int total_chapter;
+  final int create_at;
 
   MangaModel({
+    required this.create_at,
     required this.id,
     required this.manga_photo,
     required this.manga_titel,
@@ -31,6 +33,8 @@ class MangaModel {
         summary: json["summary"],
         authors: json["authors"] as List<dynamic>,
         genres: json["genres"] as List<dynamic>,
-        total_chapter: json["total_chapter"]);
+        total_chapter: json["total_chapter"],
+        create_at: json["create_at"]
+        );
   }
 }

@@ -74,6 +74,8 @@ class _MangaDetailsState extends State<MangaDetails> {
                 DetailsPage(
                   manga_photo: widget.mangaModel.manga_photo,
                   manga_titel: widget.mangaModel.manga_titel,
+                  status: widget.mangaModel.status,
+                  create_at: widget.mangaModel.create_at,
                 ),
                 ChaptersPage(),
                 MoreLikeThisPage()
