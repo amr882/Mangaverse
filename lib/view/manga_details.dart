@@ -70,12 +70,10 @@ class _MangaDetailsState extends State<MangaDetails> {
               ],
             ),
             body: TabBarView(
+              physics: BouncingScrollPhysics(),
               children: <Widget>[
                 DetailsPage(
-                  manga_photo: widget.mangaModel.manga_photo,
-                  manga_titel: widget.mangaModel.manga_titel,
-                  status: widget.mangaModel.status,
-                  create_at: widget.mangaModel.create_at,
+                  mangaModel: widget.mangaModel,
                 ),
                 ChaptersPage(),
                 MoreLikeThisPage()
