@@ -17,7 +17,7 @@ class _LatestMangaState extends State<LatestMangaPage> {
   bool isLoading = true;
   Future featchLatestMangas() async {
     isLoading = true;
-    final req = await MangaApi.featchLatestMangas(currentPage);
+    final req = await MangaApi.fetchLatestMangas(currentPage);
     if (mounted) {
       setState(() {
         latestManga.addAll(req);

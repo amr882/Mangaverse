@@ -14,48 +14,46 @@ class MangaApi {
 
 // featch latest mangas
 
-  static Future featchLatestMangas(int current_page) async {
-    final respone = await http.get(
-        Uri.parse("${url}latest?page=$current_page&type=all"),
-        headers: headers);
+  static Future<List<MangaModel>> fetchMangas(String endpoint,
+      {int? page, String? text}) async {
+    final Uri uri = Uri.parse(url + endpoint);
+    final Map<String, String> queryParams = {};
+    if (page != null) {
+      queryParams['page'] = page.toString();
+    }
+    if (text != null) {
+      queryParams['text'] = text;
+    }
+    if (endpoint != "search") {
+      queryParams['type'] = "all";
+    }
+    final Uri finalUri = uri.replace(queryParameters: queryParams);
 
-    if (respone.statusCode == 200) {
-      final List<dynamic> jsonData = jsonDecode(respone.body)["data"];
-      final List<MangaModel> mangas =
-          jsonData.map((data) => MangaModel.fromJson(data)).toList();
-      return mangas;
+    final response = await http.get(finalUri, headers: headers);
+
+    if (response.statusCode == 200) {
+      final dynamic jsonData = jsonDecode(response.body);
+
+      if (jsonData is Map<String, dynamic> &&
+          jsonData.containsKey('data') &&
+          jsonData['data'] is List) {
+        final List<dynamic> mangaData = jsonData['data'];
+        return mangaData.map((data) => MangaModel.fromJson(data)).toList();
+      } else {
+        throw Exception("Invalid API response format: $jsonData");
+      }
     } else {
-      throw Exception("error getting manga data");
+      throw Exception(
+          "Error getting manga data: ${response.statusCode} - ${response.body}");
     }
   }
 
-  // featch all mangas
-  static Future fetchAllMangas(int current_page) async {
-    final respone = await http.get(
-        Uri.parse("${url}fetch?page=$current_page&type=all"),
-        headers: headers);
+  static Future<List<MangaModel>> fetchLatestMangas(int page) =>
+      fetchMangas("latest", page: page);
 
-    if (respone.statusCode == 200) {
-      final List<dynamic> jsonData = jsonDecode(respone.body)["data"];
-      final List<MangaModel> mangas =
-          jsonData.map((data) => MangaModel.fromJson(data)).toList();
-      return mangas;
-    } else {
-      throw Exception("error getting manga data");
-    }
-  }
+  static Future<List<MangaModel>> fetchAllMangas(int page) =>
+      fetchMangas("fetch", page: page);
 
-  // search for mangas
-  static Future searchMangas(String mangaName) async {
-    final respone = await http.get(Uri.parse("${url}search?text=$mangaName"),
-        headers: headers);
-    if (respone.statusCode == 200) {
-      final List<dynamic> jsonData = jsonDecode(respone.body)["data"];
-      final List<MangaModel> mangas =
-          jsonData.map((data) => MangaModel.fromJson(data)).toList();
-      return mangas;
-    } else {
-      throw Exception("error getting data");
-    }
-  }
+  static Future<List<MangaModel>> searchMangas(String mangaName) =>
+      fetchMangas("search", text: mangaName);
 }
