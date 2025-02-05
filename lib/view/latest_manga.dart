@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mangaverse/model/manga_model.dart';
 import 'package:mangaverse/services/manga_api.dart';
@@ -53,7 +54,7 @@ class _LatestMangaState extends State<LatestMangaPage> {
               },
               child: Column(
                 children: [
-                   SizedBox(
+                  SizedBox(
                     height: 4.h,
                   ),
                   Expanded(
@@ -74,8 +75,15 @@ class _LatestMangaState extends State<LatestMangaPage> {
                                 children: [
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(13),
-                                    child: Image.network(
-                                      latestManga[index].manga_photo,
+                                    child: CachedNetworkImage(
+                                      imageUrl: latestManga[index].manga_photo,
+                                      placeholder: (context, url) => Container(
+                                          height: 22.5.h,
+                                          width: 30.w,
+                                          color: Colors.white,
+                                          child: Center()),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
                                       height: 22.5.h,
                                       width: 30.w,
                                       fit: BoxFit.cover,

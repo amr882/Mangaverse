@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mangaverse/model/manga_model.dart';
@@ -56,8 +57,12 @@ class _DetailsPageState extends State<DetailsPage> {
                           offset: Offset(0, 3)),
                     ],
                   ),
-                  child: Image.network(
-                    widget.mangaModel.manga_photo,
+                  child: CachedNetworkImage(
+                    imageUrl: widget.mangaModel.manga_photo,
+                    placeholder: (context, url) => SizedBox(
+                        height: 5.h,
+                        child: Center(child: CircularProgressIndicator())),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -81,8 +86,14 @@ class _DetailsPageState extends State<DetailsPage> {
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                          widget.mangaModel.manga_photo,
+                        child: CachedNetworkImage(
+                          imageUrl: widget.mangaModel.manga_photo,
+                          placeholder: (context, url) => SizedBox(
+                              height: 5.h,
+                              child:
+                                  Center(child: CircularProgressIndicator())),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
                           height: 27.5.h,
                           width: 35.w,
                           fit: BoxFit.cover,

@@ -34,9 +34,9 @@ class MangaDetailsCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: const Color.fromARGB(50, 0, 0, 0),
+            color: const Color.fromARGB(49, 122, 122, 122),
             spreadRadius: 5,
-            blurRadius: 10,
+            blurRadius: 15,
           ),
         ],
       ),
@@ -50,25 +50,28 @@ class MangaDetailsCard extends StatelessWidget {
           SizedBox(
             height: 2.h,
           ),
-          Wrap(
-            children: List.generate(
-              genres.length,
-              (index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: Chip(
-                    shape: StadiumBorder(
-                        side: BorderSide(color: Colors.transparent)),
-                    color: WidgetStatePropertyAll(
-                      Color(0xffe9e9e9),
+          SizedBox(
+            width: 85.w,
+            child: Wrap(
+              children: List.generate(
+                genres.length,
+                (index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: Chip(
+                      shape: StadiumBorder(
+                          side: BorderSide(color: Colors.transparent)),
+                      color: WidgetStatePropertyAll(
+                        Color(0xffe9e9e9),
+                      ),
+                      padding: EdgeInsets.all(6),
+                      label: Text(
+                        genres[index],
+                      ),
                     ),
-                    padding: EdgeInsets.all(6),
-                    label: Text(
-                      genres[index],
-                    ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ),
           Padding(

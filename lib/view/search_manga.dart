@@ -63,7 +63,7 @@ class _SearchMangaState extends State<SearchManga> {
                 fillColor: Colors.grey[300],
                 suffixIcon: Icon(
                   Icons.search_rounded,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
                 enabledBorder: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -77,9 +77,15 @@ class _SearchMangaState extends State<SearchManga> {
               },
             ),
           ),
+          SizedBox(
+            height: 2.h,
+          ),
           Expanded(
             child: isLoading
-                ? const Center(child: CircularProgressIndicator(color: Colors.green,))
+                ? const Center(
+                    child: CircularProgressIndicator(
+                    color: Colors.green,
+                  ))
                 : GridView.builder(
                     physics: BouncingScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

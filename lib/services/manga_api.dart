@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:mangaverse/auth/keys/keys.dart';
+import 'package:mangaverse/model/chapter_model.dart';
 import 'package:mangaverse/model/manga_model.dart';
 
 class MangaApi {
@@ -11,8 +12,6 @@ class MangaApi {
     "x-rapidapi-key": api_Key,
     "x-rapidapi-host": "mangaverse-api.p.rapidapi.com"
   };
-
-// featch latest mangas
 
   static Future<List<MangaModel>> fetchMangas(String endpoint,
       {int? page, String? text}) async {
@@ -24,9 +23,7 @@ class MangaApi {
     if (text != null) {
       queryParams['text'] = text;
     }
-    if (endpoint != "search") {
-      queryParams['type'] = "all";
-    }
+
     final Uri finalUri = uri.replace(queryParameters: queryParams);
 
     final response = await http.get(finalUri, headers: headers);
@@ -40,11 +37,26 @@ class MangaApi {
         final List<dynamic> mangaData = jsonData['data'];
         return mangaData.map((data) => MangaModel.fromJson(data)).toList();
       } else {
-        throw Exception("Invalid API response format: $jsonData");
+        throw Exception("Invalid API response format");
       }
     } else {
-      throw Exception(
-          "Error getting manga data: ${response.statusCode} - ${response.body}");
+      throw Exception("Error getting manga data");
+    }
+  }
+
+// chapter List
+  static Future<List<ChapterModel>> fetchChapters(String mangaId) async {
+    try {
+      final response = await http.get(Uri.parse("${url}chapter?id=$mangaId"),
+          headers: headers);
+      if (response.statusCode == 200) {
+        final List<dynamic> jsonData = jsonDecode(response.body)["data"];
+        return jsonData.map((data) => ChapterModel.fromJson(data)).toList();
+      } else {
+        throw Exception("Invalid API response format");
+      }
+    } on Exception {
+      throw Exception("error getting chapters");
     }
   }
 
