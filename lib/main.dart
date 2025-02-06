@@ -2,16 +2,23 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mangaverse/auth/view/lets_you_in.dart';
 import 'package:mangaverse/auth/view/sign_in.dart';
+import 'package:mangaverse/services/favorite_provider.dart';
 import 'package:mangaverse/view/latest_manga.dart';
 import 'package:mangaverse/view/intro_page.dart';
 import 'package:mangaverse/widgets/bottom_nav.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      Provider<FavoriteProvider>(create: (_) => FavoriteProvider()),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -22,7 +29,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
