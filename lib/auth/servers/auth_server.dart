@@ -68,7 +68,27 @@ class AuthServer {
 
   // google sign in
 
-  //
+  static Future signInWithGoogle(BuildContext context) async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    if (googleUser == null) {
+      return;
+    }
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    await FirebaseAuth.instance.signInWithCredential(credential);
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      'nav',
+      (route) => false,
+    );
+  }
+
+  //  signOut
   static Future<void> signOut(BuildContext context) async {
     GoogleSignIn googleSignIn = GoogleSignIn();
     googleSignIn.disconnect();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mangaverse/auth/servers/auth_server.dart';
 import 'package:mangaverse/auth/view/sign_in.dart';
 import 'package:mangaverse/auth/view/sign_up.dart';
 import 'package:mangaverse/widgets/button.dart';
@@ -15,6 +16,10 @@ class LetsYouIn extends StatefulWidget {
 }
 
 class _LetsYouInState extends State<LetsYouIn> {
+  googleSignIn() async {
+    AuthServer.signInWithGoogle(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,16 +59,14 @@ class _LetsYouInState extends State<LetsYouIn> {
                   height: 3.h,
                 ),
                 ContinueWith(
-                  onTap: () {
-
-                  },
+                  onTap: () {},
                   continueWithImage: 'assets/twitter.svg',
                   methodName: 'Twitter',
                   imageHeight: 3.5,
                 ),
                 ContinueWith(
                   onTap: () {
-                    // signInWithGoogle();
+                    googleSignIn();
                   },
                   continueWithImage: 'assets/google.svg',
                   methodName: 'Google',

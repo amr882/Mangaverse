@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mangaverse/model/chapter_model.dart';
 import 'package:mangaverse/model/manga_model.dart';
+import 'package:mangaverse/services/favorite_provider.dart';
+import 'package:mangaverse/services/manga_api.dart';
 import 'package:mangaverse/view/manga_page/chapters_page.dart';
 import 'package:mangaverse/view/manga_page/details_page.dart';
 import 'package:mangaverse/view/manga_page/more_like_this_page.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class MangaDetails extends StatefulWidget {
@@ -15,7 +19,26 @@ class MangaDetails extends StatefulWidget {
 
 class _MangaDetailsState extends State<MangaDetails> {
   GlobalKey<ScaffoldState> globalKey = GlobalKey();
+
+  List<ChapterModel> chapters = [];
+  bool isLoading = true;
+  Future getChapters() async {
+    final req = await MangaApi.fetchChapters(widget.mangaModel.id);
+    if (mounted) {
+      setState(() {
+        chapters = req;
+        isLoading = false;
+      });
+    }
+  }
+
   bool isFav = false;
+  @override
+  void initState() {
+    getChapters();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -59,7 +82,7 @@ class _MangaDetailsState extends State<MangaDetails> {
                       : Icon(Icons.favorite_border_rounded),
                   onPressed: () {
                     setState(() {
-                      isFav = !isFav;
+                      // provider.toggleFavorite(widget.mangaModel);
                     });
                   },
                 ),
@@ -77,6 +100,7 @@ class _MangaDetailsState extends State<MangaDetails> {
                 ),
                 ChaptersPage(
                   mangaModel: widget.mangaModel,
+                  allChapters: chapters,
                 ),
                 MoreLikeThisPage()
               ],
