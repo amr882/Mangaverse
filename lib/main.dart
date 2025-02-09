@@ -15,7 +15,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   runApp(MultiProvider(
     providers: [
-      Provider<FavoriteProvider>(create: (_) => FavoriteProvider()),
+      ChangeNotifierProvider(create: (_) => FavoriteProvider()),
     ],
     child: const MyApp(),
   ));

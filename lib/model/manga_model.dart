@@ -34,7 +34,6 @@ class MangaModel {
         authors: json["authors"] as List<dynamic>,
         genres: json["genres"] as List<dynamic>,
         total_chapter: json["total_chapter"],
-        create_at: json["create_at"]
-        );
+        create_at: json["create_at"]);
   }
 }

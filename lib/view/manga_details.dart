@@ -41,69 +41,73 @@ class _MangaDetailsState extends State<MangaDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-        length: 3,
-        child: Scaffold(
-            key: globalKey,
-            appBar: AppBar(
-              backgroundColor: const Color(0xfffafafa),
-              elevation: 5,
-              shadowColor: Theme.of(context).colorScheme.shadow,
-              title: Text(
-                widget.mangaModel.manga_titel.length <= 20
-                    ? widget.mangaModel.manga_titel
-                    : "${widget.mangaModel.manga_titel.substring(0, 20)}...",
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                style: TextStyle(fontSize: 2.h),
-              ),
-              bottom: TabBar(
-                indicatorColor: Colors.green,
-                labelColor: Colors.green,
-                tabs: <Widget>[
-                  Tab(
-                    icon: Text("Manga details"),
+    return ChangeNotifierProvider.value(
+      value: Provider.of<FavoriteProvider>(context, listen: false),
+      child: DefaultTabController(
+          length: 3,
+          child: Scaffold(
+              key: globalKey,
+              appBar: AppBar(
+                backgroundColor: const Color(0xfffafafa),
+                elevation: 5,
+                shadowColor: Theme.of(context).colorScheme.shadow,
+                title: Text(
+                  widget.mangaModel.manga_titel.length <= 20
+                      ? widget.mangaModel.manga_titel
+                      : "${widget.mangaModel.manga_titel.substring(0, 20)}...",
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: TextStyle(fontSize: 2.h),
+                ),
+                bottom: TabBar(
+                  indicatorColor: Colors.green,
+                  labelColor: Colors.green,
+                  tabs: <Widget>[
+                    Tab(
+                      icon: Text("Manga details"),
+                    ),
+                    Tab(
+                      icon: Text("chapters"),
+                    ),
+                    Tab(
+                      icon: Text("more like this"),
+                    ),
+                  ],
+                ),
+                actions: [
+                  Consumer<FavoriteProvider>(
+                    builder: (context, provider, child) {
+                      final isFav = provider.isExist(widget.mangaModel);
+                      return IconButton(
+                        icon: isFav
+                            ? const Icon(Icons.favorite_outlined,
+                                color: Colors.red)
+                            : const Icon(Icons.favorite_border_rounded),
+                        onPressed: () {
+                          provider.toggleFavorite(widget.mangaModel);
+                        },
+                      );
+                    },
                   ),
-                  Tab(
-                    icon: Text("chapters"),
-                  ),
-                  Tab(
-                    icon: Text("more like this"),
-                  ),
+                  IconButton(
+                    icon: const Icon(Icons.more_vert),
+                    onPressed: () {},
+                  )
                 ],
               ),
-              actions: [
-                IconButton(
-                  icon: isFav
-                      ? Icon(
-                          Icons.favorite_outlined,
-                          color: Colors.red,
-                        )
-                      : Icon(Icons.favorite_border_rounded),
-                  onPressed: () {
-                    setState(() {
-                      // provider.toggleFavorite(widget.mangaModel);
-                    });
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.more_vert),
-                  onPressed: () {},
-                )
-              ],
-            ),
-            body: TabBarView(
-              physics: BouncingScrollPhysics(),
-              children: <Widget>[
-                DetailsPage(
-                  mangaModel: widget.mangaModel,
-                ),
-                ChaptersPage(
-                  mangaModel: widget.mangaModel,
-                  allChapters: chapters,
-                ),
-                MoreLikeThisPage()
-              ],
-            )));
+              body: TabBarView(
+                physics: BouncingScrollPhysics(),
+                children: <Widget>[
+                  DetailsPage(
+                    mangaModel: widget.mangaModel,
+                  ),
+                  ChaptersPage(
+                    mangaModel: widget.mangaModel,
+                    allChapters: chapters,
+                  ),
+                  MoreLikeThisPage()
+                ],
+              ))),
+    );
   }
 }
