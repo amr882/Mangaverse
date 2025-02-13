@@ -36,4 +36,7 @@ class MangaModel {
         total_chapter: json["total_chapter"],
         create_at: json["create_at"]);
   }
+  Map<String, dynamic> toJson() {
+    return {'id': id, 'title': manga_titel, 'thumb': manga_photo};
+  }
 }
