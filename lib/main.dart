@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mangaverse/auth/keys/keys.dart';
 import 'package:mangaverse/auth/view/lets_you_in.dart';
 import 'package:mangaverse/auth/view/sign_in.dart';
 import 'package:mangaverse/services/favorite_provider.dart';
@@ -12,7 +15,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+
+  Platform.isAndroid
+      ? await Firebase.initializeApp(
+          options: FirebaseOptions(
+              apiKey: currentKey,
+              appId: mobilesdk_app_id,
+              messagingSenderId: project_number,
+              projectId: project_id))
+      :
+       await Firebase.initializeApp();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => FavoriteProvider()),

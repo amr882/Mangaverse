@@ -24,22 +24,18 @@ class FavoriteProvider extends ChangeNotifier {
     if (_auth.currentUser == null) return;
     final userId = _auth.currentUser!.uid;
 
-    try {
-      final snapshot = await _firestore
-          .collection('users')
-          .doc(userId)
-          .collection('favorites')
-          .get();
+    final snapshot = await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('favorites')
+        .get();
 
-      _favoriteProvider.clear();
-      for (final doc in snapshot.docs) {
-        final manga = MangaModel.fromJson(doc.data());
-        _favoriteProvider.add(manga);
-      }
-      notifyListeners();
-    } catch (e) {
-      print("Error loading favorites: $e");
+    _favoriteProvider.clear();
+    for (final doc in snapshot.docs) {
+      final manga = MangaModel.fromJson(doc.data());
+      _favoriteProvider.add(manga);
     }
+    notifyListeners();
   }
 
   void toggleFavorite(MangaModel mangaModel) async {
