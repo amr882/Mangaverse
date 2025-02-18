@@ -16,7 +16,7 @@ class FavoriteProvider extends ChangeNotifier {
   }
 
   bool isExist(MangaModel mangaModel) {
-    return _favoriteProvider.contains(mangaModel);
+    return _favoriteProvider.any((element) => element.id == mangaModel.id);
   }
 
 // to load fav from firestore and show it in manga page if it is in fav or not
@@ -43,7 +43,7 @@ class FavoriteProvider extends ChangeNotifier {
     final mangaId = mangaModel.id;
 
     if (_favoriteProvider.contains(mangaModel)) {
-      _favoriteProvider.remove(mangaModel);
+      _favoriteProvider.removeWhere((element) => element.id == mangaId);
       await _firestore
           .collection('users')
           .doc(userId)

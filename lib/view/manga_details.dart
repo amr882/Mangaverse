@@ -79,7 +79,7 @@ class _MangaDetailsState extends State<MangaDetails> {
                           ? const Icon(Icons.favorite_outlined,
                               color: Colors.red)
                           : const Icon(Icons.favorite_border_rounded),
-                      onPressed: () {
+                      onPressed: () async {
                         value.toggleFavorite(widget.mangaModel);
                       },
                     ),
