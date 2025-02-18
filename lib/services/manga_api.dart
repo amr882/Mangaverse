@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:mangaverse/auth/keys/keys.dart';
+import 'package:mangaverse/model/chapter_data_model.dart';
 import 'package:mangaverse/model/chapter_model.dart';
 import 'package:mangaverse/model/manga_model.dart';
 
@@ -52,6 +53,22 @@ class MangaApi {
       if (response.statusCode == 200) {
         final List<dynamic> jsonData = jsonDecode(response.body)["data"];
         return jsonData.map((data) => ChapterModel.fromJson(data)).toList();
+      } else {
+        throw Exception("Invalid API response format");
+      }
+    } on Exception {
+      throw Exception("error getting chapters");
+    }
+  }
+
+  static Future<List<ChapterDataModel>> fetchChaptersData(
+      String chapter_id) async {
+    try {
+      final response = await http.get(Uri.parse("${url}image?id=$chapter_id"),
+          headers: headers);
+      if (response.statusCode == 200) {
+        final List<dynamic> jsonData = jsonDecode(response.body)["data"];
+        return jsonData.map((data) => ChapterDataModel.fromJson(data)).toList();
       } else {
         throw Exception("Invalid API response format");
       }

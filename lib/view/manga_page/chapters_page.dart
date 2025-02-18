@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mangaverse/model/chapter_model.dart';
 import 'package:mangaverse/model/manga_model.dart';
+import 'package:mangaverse/view/read_chapter.dart';
 import 'package:sizer/sizer.dart';
 
 class ChaptersPage extends StatefulWidget {
@@ -29,28 +30,39 @@ class _ChaptersPageState extends State<ChaptersPage> {
               .join(" : ");
           return Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Container(
-              padding: const EdgeInsets.all(8.0),
-              width: 90.w,
-              height: 5.h,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    titel.length <= 20 ? titel : "${titel.substring(0, 20)}...",
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: GoogleFonts.rubik(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 1.5.h,
-                        color: Color(0xff182128)),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => ReadChapter(
+                    chapterModel: widget.allChapters[index],
                   ),
-                  Icon(
-                    Icons.visibility,
-                    color: Color(0xffbdc1c2),
-                    size: 2.5.h,
-                  )
-                ],
+                ));
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8.0),
+                width: 90.w,
+                height: 5.h,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      titel.length <= 20
+                          ? titel
+                          : "${titel.substring(0, 20)}...",
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: GoogleFonts.rubik(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 1.5.h,
+                          color: Color(0xff182128)),
+                    ),
+                    Icon(
+                      Icons.visibility,
+                      color: Color(0xffbdc1c2),
+                      size: 2.5.h,
+                    )
+                  ],
+                ),
               ),
             ),
           );
