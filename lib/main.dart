@@ -6,6 +6,7 @@ import 'package:mangaverse/auth/keys/keys.dart';
 import 'package:mangaverse/auth/view/lets_you_in.dart';
 import 'package:mangaverse/auth/view/sign_in.dart';
 import 'package:mangaverse/services/favorite_provider.dart';
+import 'package:mangaverse/services/viewed_provider.dart';
 import 'package:mangaverse/view/latest_manga.dart';
 import 'package:mangaverse/view/intro_page.dart';
 import 'package:mangaverse/widgets/bottom_nav.dart';
@@ -23,11 +24,11 @@ Future<void> main() async {
               appId: mobilesdk_app_id,
               messagingSenderId: project_number,
               projectId: project_id))
-      :
-       await Firebase.initializeApp();
+      : await Firebase.initializeApp();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => FavoriteProvider()),
+      ChangeNotifierProvider(create: (_) => ViewedProvider()),
     ],
     child: const MyApp(),
   ));

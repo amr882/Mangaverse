@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:mangaverse/view/all_manga.dart';
+import 'package:mangaverse/view/favorite_page.dart';
 import 'package:mangaverse/view/latest_manga.dart';
 import 'package:mangaverse/view/search_manga.dart';
 import 'package:mangaverse/view/user_profile.dart';
@@ -20,70 +21,80 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     const LatestMangaPage(),
     const AllManga(),
     const SearchManga(),
+    const FavoritePage(),
     const UserProfile()
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffffffff),
-      bottomNavigationBar: Container(
-        color: const Color(0xffffffff),
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: SalomonBottomBar(
-            backgroundColor: const Color(0xffffffff),
-            currentIndex: _currentPage,
-            onTap: (value) {
-              setState(() {
-                _currentPage = value;
-              });
-            },
-            items: [
-              /// Latest
-              SalomonBottomBarItem(
-                icon: const HugeIcon(
-                  icon: HugeIcons.strokeRoundedSparkles,
-                  color: Colors.green,
+        backgroundColor: const Color(0xffffffff),
+        bottomNavigationBar: Container(
+          color: const Color(0xffffffff),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: SalomonBottomBar(
+              backgroundColor: const Color(0xffffffff),
+              currentIndex: _currentPage,
+              onTap: (value) {
+                setState(() {
+                  _currentPage = value;
+                });
+              },
+              items: [
+                /// Latest
+                SalomonBottomBarItem(
+                  icon: const HugeIcon(
+                    icon: HugeIcons.strokeRoundedSparkles,
+                    color: Colors.green,
+                  ),
+                  title: const Text("Latest"),
+                  selectedColor: Colors.teal,
                 ),
-                title: const Text("Latest"),
-                selectedColor: Colors.teal,
-              ),
 
-              /// All manga
-              SalomonBottomBarItem(
-                icon: const Icon(
-                  Icons.menu_book_rounded,
-                  color: Colors.green,
+                /// All manga
+                SalomonBottomBarItem(
+                  icon: const Icon(
+                    Icons.menu_book_rounded,
+                    color: Colors.green,
+                  ),
+                  title: const Text("All manga"),
+                  selectedColor: Colors.teal,
                 ),
-                title: const Text("All manga"),
-                selectedColor: Colors.teal,
-              ),
 
-              /// Search
-              SalomonBottomBarItem(
-                icon: const Icon(
-                  Icons.search,
-                  color: Colors.green,
+                /// Search
+                SalomonBottomBarItem(
+                  icon: const Icon(
+                    Icons.search,
+                    color: Colors.green,
+                  ),
+                  title: const Text("Search"),
+                  selectedColor: Colors.teal,
                 ),
-                title: const Text("Search"),
-                selectedColor: Colors.teal,
-              ),
 
-              /// Profile
-              SalomonBottomBarItem(
-                icon: const Icon(
-                  Icons.person,
-                  color: Colors.green,
+                /// favs
+                SalomonBottomBarItem(
+                  icon: const Icon(
+                    Icons.favorite_rounded,
+                    color: Colors.green,
+                  ),
+                  title: const Text("Favorites"),
+                  selectedColor: Colors.teal,
                 ),
-                title: const Text("Profile"),
-                selectedColor: Colors.teal,
-              ),
-            ],
+
+                /// Profile
+                SalomonBottomBarItem(
+                  icon: const Icon(
+                    Icons.person,
+                    color: Colors.green,
+                  ),
+                  title: const Text("Profile"),
+                  selectedColor: Colors.teal,
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      body: pages[_currentPage]
-    );
+        body: pages[_currentPage]);
   }
 }

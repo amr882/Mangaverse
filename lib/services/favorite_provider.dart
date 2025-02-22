@@ -11,6 +11,9 @@ class FavoriteProvider extends ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  bool _isLoading = true;
+  bool get isLoading => _isLoading;
+
   FavoriteProvider() {
     _loadFavorites();
   }
@@ -19,9 +22,15 @@ class FavoriteProvider extends ChangeNotifier {
     return _favoriteProvider.any((element) => element.id == mangaModel.id);
   }
 
-// to load fav from firestore and show it in manga page if it is in fav or not
   Future<void> _loadFavorites() async {
-    if (_auth.currentUser == null) return;
+    _isLoading = true;
+    notifyListeners();
+
+    if (_auth.currentUser == null) {
+      _isLoading = false;
+      notifyListeners();
+      return;
+    }
     final userId = _auth.currentUser!.uid;
 
     final snapshot = await _firestore
@@ -35,6 +44,7 @@ class FavoriteProvider extends ChangeNotifier {
       final manga = MangaModel.fromJson(doc.data());
       _favoriteProvider.add(manga);
     }
+    _isLoading = false;
     notifyListeners();
   }
 
@@ -42,7 +52,7 @@ class FavoriteProvider extends ChangeNotifier {
     final userId = _auth.currentUser!.uid;
     final mangaId = mangaModel.id;
 
-    if (_favoriteProvider.contains(mangaModel)) {
+    if (_favoriteProvider.any((element) => element.id == mangaId)) {
       _favoriteProvider.removeWhere((element) => element.id == mangaId);
       await _firestore
           .collection('users')

@@ -42,6 +42,13 @@ class _MangaDetailsState extends State<MangaDetails> {
   Widget build(BuildContext context) {
     return Consumer<FavoriteProvider>(
       builder: (context, value, child) {
+        if (value.isLoading) {
+          return const Scaffold(
+              body: Center(
+                  child: CircularProgressIndicator(
+            color: Colors.green,
+          )));
+        }
         return DefaultTabController(
             length: 3,
             child: Scaffold(
@@ -77,10 +84,12 @@ class _MangaDetailsState extends State<MangaDetails> {
                     IconButton(
                       icon: value.isExist(widget.mangaModel)
                           ? const Icon(Icons.favorite_outlined,
-                              color: Colors.red)
+                              color: Colors.green)
                           : const Icon(Icons.favorite_border_rounded),
                       onPressed: () async {
-                        value.toggleFavorite(widget.mangaModel);
+                        setState(() {
+                          value.toggleFavorite(widget.mangaModel);
+                        });
                       },
                     ),
                     IconButton(

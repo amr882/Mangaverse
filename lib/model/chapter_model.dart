@@ -16,4 +16,7 @@ class ChapterModel {
       chapter_titel: json["title"],
     );
   }
+  Map<String, dynamic> toJson() {
+    return {"manga": manga_id, "id": chapter_id, "title": chapter_titel};
+  }
 }
