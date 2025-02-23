@@ -17,8 +17,11 @@ class _UserProfileState extends State<UserProfile> {
         onPressed: () async {
           AuthServer.signOut(context);
         },
-        color: Colors.red,
-        child: Text("sign out"),
+        color: Colors.green,
+        child: Text(
+          "sign out",
+          style: TextStyle(color: Colors.white,fontSize: 50),
+        ),
       )),
     );
   }
